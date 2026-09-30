@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagrama de Balões: Planta Completa Moura - MOURA-015-2026-ELE-DE-002</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    :root {
+      --tdi-verde: #00B800;
+      --tdi-grafite: #454545;
+      --tdi-creme: #FAFAF8;
+      --tdi-pessego: #FEF1E0;
+      --tdi-ambar: #A86800;
+      --tdi-cinza-claro: #EDEDED;
+    }
+    body {
+      background-color: #F3F4F6;
+      color: #333333;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .badge-balao {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 25px;
+      height: 25px;
+      border-radius: 9999px;
+      font-weight: 800;
+      font-size: 10px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+    }
+    .tab-btn.active {
+      background-color: #454545 !important;
+      color: #ffffff !important;
+      border-color: #454545 !important;
+    }
+    @page {
+      size: A4 landscape;
+      margin: 8mm 6mm;
+    }
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .no-print, header, nav, #barraFiltros, section, #quadrosContainer, footer:not(.relatorio-footer), #modalAtividade {
+        display: none !important;
+      }
+      #modalRelatorioPDF {
+        display: block !important;
+        position: static !important;
+        background: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: visible !important;
+        width: 100% !important;
+      }
+      #modalRelatorioPDF .modal-dialog-clean {
+        box-shadow: none !important;
+        border: none !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      #modalRelatorioPDF .overflow-y-auto {
+        overflow: visible !important;
+        padding: 0 !important;
+        background: transparent !important;
+      }
+      #relatorioConteudoPrint {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+      thead {
+        display: table-header-group !important;
+      }
+      tr {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+    }
+  </style>
+</head>
+<body class="p-3 md:p-6">
+
+  <!-- CABEÇALHO PADRÃO TDI / PROJETO MOURA -->
+  <header class="bg-white border border-gray-200 rounded-xl p-5 mb-5 shadow-sm">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between pb-3 gap-4">
+      <div class="flex items-center gap-4">
+        <!-- Logomarca Oficial TDI -->
+        <img src="https://mcp.tdiautomacao.com/d/eyJrIjoiZmlsZSIsInIiOiJMb2dvcy9UREkvbG9nby10ZGkucG5nIiwiZSI6MTc5MDcwNTU2NX0.f9dmyJUNJJJz23AFolVnQ93JCGIsI29bOjqROefLa3w" 
+             alt="TDI Automação Industrial" 
+             class="h-11 w-auto object-contain" 
+             onerror="this.outerHTML='<div class=\'w-11 h-11 rounded-lg bg-[#00B800] flex items-center justify-center text-white font-black text-xl\'>TDI</div>'">
+        <div class="border-l-2 border-[#00B800] pl-3.5">
+          <span class="text-[11px] uppercase font-bold tracking-widest text-[#00B800] block">TDI Automação Industrial</span>
+          <h1 class="text-lg md:text-xl font-bold text-[#454545]">Diagrama de Balões & Gestão da Planta</h1>
+        </div>
+      </div>
+      <div class="text-left md:text-right">
+        <div class="text-xs font-black tracking-wider text-[#454545] uppercase mb-1">CLIENTE: BATERIAS MOURA</div>
+        <div class="inline-block bg-[#FEF1E0] text-[#A86800] text-xs font-bold px-2.5 py-1 rounded-md border border-[#F6D8B5] mb-1">
+          CÓDIGO: MOURA-015-2026-ELE-DE-002
+        </div>
+        <p class="text-[11px] text-gray-500 font-medium">SISTEMA INTEGRADO DE AUTOMAÇÃO · REVISÃO 00 · 29/09/2026</p>
+      </div>
+    </div>
+    
+    <!-- Linha verde de acento institucional TDI -->
+    <div class="w-full h-1 bg-[#00B800] rounded-full mb-4"></div>
+
+    <!-- SELETOR DE TELAS / ABAS PRINCIPAIS (4 SETORES DA PLANTA) -->
+    <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4 border-b border-gray-200 pb-3 mb-4">
+      <div class="flex items-center flex-wrap gap-2">
+        <button id="btnAbaEmpastamento" onclick="alternarTela('EMPASTAMENTO')" class="tab-btn active px-3 py-2 rounded-xl border text-xs font-black flex items-center gap-1.5 transition shadow-sm bg-[#454545] text-white border-[#454545]">
+          <span>🏭</span> EMPASTAMENTO (5 MÁQUINAS)
+        </button>
+        <button id="btnAbaMontagem" onclick="alternarTela('MONTAGEM')" class="tab-btn px-3 py-2 rounded-xl border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 text-xs font-black flex items-center gap-1.5 transition shadow-sm">
+          <span>⚙️</span> MONTAGEM (12 QUADROS · EVP–TVZ)
+        </button>
+        <button id="btnAbaAcabamento" onclick="alternarTela('ACABAMENTO')" class="tab-btn px-3 py-2 rounded-xl border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 text-xs font-black flex items-center gap-1.5 transition shadow-sm">
+          <span>🔋</span> ACABAMENTO (7 QUADROS · 11 MÁQUINAS)
+        </button>
+        <button id="btnAbaRoches" onclick="alternarTela('ROCHES')" class="tab-btn px-3 py-2 rounded-xl border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 text-xs font-black flex items-center gap-1.5 transition shadow-sm">
+          <span>⚡</span> ROCHES / GRADES EXPANDIDAS (2 QUADROS · 7 ROCHES)
+        </button>
+      </div>
+
+      <div class="flex items-center gap-2 no-print">
+        <button onclick="abrirModalNovaAtividade()" class="px-3.5 py-2 bg-[#00B800] text-white hover:bg-[#009e00] rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-sm transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          + Adicionar Balão
+        </button>
+        <button onclick="exportarCSV()" class="px-3 py-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 rounded-lg text-xs font-semibold transition flex items-center gap-1.5" title="Exportar tabela de atividades em formato CSV para Excel">
+          <svg class="w-3.5 h-3.5 text-[#00B800]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Exportar Excel (CSV)
+        </button>
+        <button onclick="exportarJSON()" class="px-3 py-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 rounded-lg text-xs font-semibold transition flex items-center gap-1.5" title="Exportar dados limpos de atividades em JSON">
+          <svg class="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          Exportar JSON
+        </button>
+        <button onclick="document.getElementById('importFile').click()" class="px-3 py-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 rounded-lg text-xs font-semibold transition" title="Importar arquivo JSON de atividades">
+          Importar
+        </button>
+        <input type="file" id="importFile" class="hidden" accept=".json" onchange="importarJSON(event)">
+        <button onclick="abrirModalRelatorioPDF()" class="px-3.5 py-2 bg-[#454545] hover:bg-black text-white rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-sm border border-gray-700" title="Gerar e exportar relatório executivo em PDF com layout oficial TDI">
+          <svg class="w-4 h-4 text-[#00B800]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          Exportar PDF (Layout TDI)
+        </button>
+      </div>
+    </div>
+
+    <!-- BARRA DE FILTROS DA TELA ATIVA -->
+    <div id="barraFiltros" class="flex flex-wrap items-center justify-between gap-3 text-sm no-print">
+      <!-- Injetado dinamicamente via JavaScript -->
+    </div>
+  </header>
+
+  <!-- LEGENDA DE STATUS DOS BALÕES (PADRÃO TDI) -->
+  <section class="bg-white border border-gray-200 rounded-xl p-3.5 mb-5 shadow-sm no-print">
+    <div class="flex items-center justify-between border-b border-gray-100 pb-2 mb-2.5">
+      <h2 class="text-xs uppercase font-bold text-gray-700 tracking-wider flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-[#00B800]"></span>
+        Legenda de Status dos Balões de Atividade
+      </h2>
+      <span id="labelInfoSetor" class="text-[11px] text-gray-400 font-medium"></span>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div class="p-2 border border-gray-200 rounded-lg bg-gray-50 flex items-center gap-2.5 cursor-pointer hover:border-[#00B800] transition" onclick="filtrarStatus('CONCLUIDO')">
+        <span class="badge-balao bg-[#00B800] text-white border-2 border-[#009e00]">OK</span>
+        <div class="leading-tight">
+          <div class="text-xs font-bold text-gray-800">Concluído</div>
+          <div class="text-[10px] text-gray-500">Atividade finalizada</div>
+        </div>
+      </div>
+      <div class="p-2 border border-gray-200 rounded-lg bg-gray-50 flex items-center gap-2.5 cursor-pointer hover:border-[#00B800] transition" onclick="filtrarStatus('EM_ANDAMENTO')">
+        <span class="badge-balao bg-[#FEF1E0] text-[#A86800] border-2 border-[#F6D8B5]">01</span>
+        <div class="leading-tight">
+          <div class="text-xs font-bold text-[#A86800]">Em Andamento</div>
+          <div class="text-[10px] text-gray-500">Execução em campo</div>
+        </div>
+      </div>
+      <div class="p-2 border border-gray-200 rounded-lg bg-gray-50 flex items-center gap-2.5 cursor-pointer hover:border-[#00B800] transition" onclick="filtrarStatus('BLOQUEADO')">
+        <span class="badge-balao bg-red-100 text-red-700 border-2 border-red-400">!</span>
+        <div class="leading-tight">
+          <div class="text-xs font-bold text-red-700">Bloqueado</div>
+          <div class="text-[10px] text-gray-500">Aguardando liberação</div>
+        </div>
+      </div>
+      <div class="p-2 border border-gray-200 rounded-lg bg-gray-50 flex items-center gap-2.5 cursor-pointer hover:border-[#00B800] transition" onclick="filtrarStatus('NAO_INICIADO')">
+        <span class="badge-balao bg-[#EDEDED] text-[#454545] border-2 border-gray-300">-</span>
+        <div class="leading-tight">
+          <div class="text-xs font-bold text-gray-700">Não Iniciado</div>
+          <div class="text-[10px] text-gray-500">Planejado no cronograma</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTÊINER PRINCIPAL DAS ESTRUTURAS HIERÁRQUICAS DOS QUADROS -->
+  <main id="quadrosContainer" class="space-y-8">
+    <!-- Renderizado dinamicamente via JavaScript -->
+  </main>
+
+  <!-- MODAL DE EDIÇÃO E CADASTRO DE BALÕES / ATIVIDADES -->
+  <div id="modalAtividade" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-gray-200 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative animate-fadeIn">
+      <button onclick="fecharModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <div class="flex items-center gap-2 border-b border-gray-100 pb-3 mb-4">
+        <span class="w-3 h-3 rounded-full bg-[#00B800]"></span>
+        <h3 id="modalTitulo" class="text-base font-bold text-[#454545]">Cadastrar Atividade do Balão</h3>
+      </div>
+
+      <form id="formAtividade" onsubmit="salvarAtividade(event)" class="space-y-4 text-xs">
+        <input type="hidden" id="editId">
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Setor da Planta</label>
+            <select id="editSetor" class="w-full border border-gray-300 rounded-lg p-2 font-bold focus:ring-2 focus:ring-[#00B800] focus:outline-none" required onchange="aoMudarSetorModal()">
+              <option value="EMPASTAMENTO">Setor de Empastamento</option>
+              <option value="MONTAGEM">Setor de Montagem</option>
+              <option value="ACABAMENTO">Setor de Acabamento</option>
+              <option value="ROCHES">Setor de Roches (Grades Expandidas)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Quadro Associado</label>
+            <select id="editQuadro" class="w-full border border-gray-300 rounded-lg p-2 font-medium focus:ring-2 focus:ring-[#00B800] focus:outline-none" required onchange="aoMudarQuadroModal()">
+              <!-- Preenchido dinamicamente -->
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label id="labelEditLinha" class="block font-bold text-gray-700 mb-1">Linha / Roche</label>
+            <select id="editLinha" class="w-full border border-gray-300 rounded-lg p-2 font-medium focus:ring-2 focus:ring-[#00B800] focus:outline-none" required>
+              <!-- Preenchido dinamicamente -->
+            </select>
+          </div>
+          <div>
+            <label id="labelEditEquipamento" class="block font-bold text-gray-700 mb-1">Máquina / Estação</label>
+            <select id="editEquipamento" class="w-full border border-gray-300 rounded-lg p-2 font-bold focus:ring-2 focus:ring-[#00B800] focus:outline-none" required>
+              <!-- Preenchido dinamicamente -->
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">Número do Balão (#)</label>
+          <input type="text" id="editNumeroBalao" placeholder="Ex: 01, 02, 03..." class="w-full border border-gray-300 rounded-lg p-2 font-bold focus:ring-2 focus:ring-[#00B800] focus:outline-none" required>
+        </div>
+
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">Descrição Detalhada da Atividade / Tarefa</label>
+          <textarea id="editDescricao" rows="3" placeholder="Ex: Passagem de cabeamento, montagem de painel ou ligação de sensores." class="w-full border border-gray-300 rounded-lg p-2 font-normal focus:ring-2 focus:ring-[#00B800] focus:outline-none" required></textarea>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Responsável</label>
+            <input type="text" id="editResponsavel" placeholder="Ex: Equipe TDI" class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-[#00B800] focus:outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Status</label>
+            <select id="editStatus" class="w-full border border-gray-300 rounded-lg p-2 font-semibold focus:ring-2 focus:ring-[#00B800] focus:outline-none">
+              <option value="NAO_INICIADO">Não Iniciado</option>
+              <option value="EM_ANDAMENTO">Em Andamento</option>
+              <option value="CONCLUIDO">Concluído</option>
+              <option value="BLOQUEADO">Bloqueado</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Data Prevista</label>
+            <input type="date" id="editData" class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-[#00B800] focus:outline-none">
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-gray-100 flex items-center justify-between">
+          <button type="button" id="btnExcluirAtividade" onclick="excluirAtividadeAtual()" class="px-3 py-1.5 text-xs text-red-600 hover:bg-red-50 rounded-lg font-bold transition hidden">
+            Excluir Balão
+          </button>
+          <div class="flex items-center gap-2 ml-auto">
+            <button type="button" onclick="fecharModal()" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-xs font-semibold hover:bg-gray-50 transition">Cancelar</button>
+            <button type="submit" class="px-5 py-2 bg-[#00B800] hover:bg-[#009e00] text-white rounded-lg text-xs font-bold transition shadow-sm">Salvar Atividade</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL DE PRÉVIA E EXPORTAÇÃO PDF NO LAYOUT TDI -->
+  <div id="modalRelatorioPDF" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+    <div class="modal-dialog-clean bg-white border border-gray-200 rounded-2xl max-w-6xl w-full max-h-[92vh] flex flex-col shadow-2xl relative my-auto">
+      
+      <!-- BARRA SUPERIOR DE AÇÕES (Não sai no PDF impresso) -->
+      <div class="p-4 bg-gray-50 border-b border-gray-200 rounded-t-2xl flex flex-wrap items-center justify-between gap-3 no-print">
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full bg-[#00B800]"></span>
+          <h3 class="text-sm sm:text-base font-bold text-[#454545]">Exportação de Relatório PDF · Layout TDI</h3>
+        </div>
+        <div class="flex items-center flex-wrap gap-2">
+          <!-- Filtro de Área para o Relatório -->
+          <div class="flex items-center gap-1.5 text-xs bg-white px-2.5 py-1 rounded-lg border border-gray-300">
+            <span class="font-bold text-gray-500">Filtrar Área:</span>
+            <select id="relatorioFiltroArea" onchange="atualizarTabelaRelatorioPDF()" class="bg-transparent font-bold text-[#454545] focus:outline-none cursor-pointer">
+              <option value="TODOS">Todas as Áreas (Planta Completa)</option>
+              <option value="EMPASTAMENTO">Apenas Empastamento</option>
+              <option value="MONTAGEM">Apenas Montagem</option>
+              <option value="ACABAMENTO">Apenas Acabamento</option>
+              <option value="ROCHES">Apenas Roches (Grades Expandidas)</option>
+            </select>
+          </div>
+
+          <button onclick="gerarEBaixarHTMLRelatorio()" class="px-3 py-1.5 bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 rounded-lg text-xs font-bold transition flex items-center gap-1.5" title="Baixar relatório formatado como arquivo HTML avulso">
+            <svg class="w-3.5 h-3.5 text-[#00B800]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            Baixar HTML
+          </button>
+
+          <button onclick="imprimirRelatorioPDF()" class="px-4 py-1.5 bg-[#00B800] hover:bg-[#009e00] text-white rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Abrir caixa de diálogo do navegador para Imprimir ou Salvar em PDF">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+            Imprimir / Salvar PDF
+          </button>
+
+          <button onclick="fecharModalRelatorioPDF()" class="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg hover:bg-gray-200">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- CORPO DO RELATÓRIO FORMATADO NO PADRÃO TDI (Área rolável e impressa) -->
+      <div class="overflow-y-auto p-4 sm:p-6 flex-1 bg-gray-50/50">
+        <div id="relatorioConteudoPrint" class="bg-white p-6 sm:p-8 rounded-xl border border-gray-200 shadow-sm max-w-5xl mx-auto">
+          
+          <!-- CABEÇALHO OFICIAL TDI -->
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 border-b-2 border-[#00B800] gap-4 mb-5">
+            <div class="flex items-center gap-4">
+              <img src="https://mcp.tdiautomacao.com/d/eyJrIjoiZmlsZSIsInIiOiJMb2dvcy9UREkvbG9nby10ZGkucG5nIiwiZSI6MTc5MDcwNTU2NX0.f9dmyJUNJJJz23AFolVnQ93JCGIsI29bOjqROefLa3w" 
+                   alt="TDI Automação Industrial" 
+                   class="h-12 w-auto object-contain"
+                   onerror="this.outerHTML='<div class=\'w-12 h-12 rounded-lg bg-[#00B800] flex items-center justify-center text-white font-black text-xl\'>TDI</div>'">
+              <div class="border-l-2 border-[#00B800] pl-3.5">
+                <span class="text-[11px] uppercase font-black tracking-widest text-[#00B800] block">TDI Automação Industrial</span>
+                <h2 class="text-lg sm:text-xl font-bold text-[#454545]">Relatório Executivo de Atividades de Campo</h2>
+                <p class="text-xs text-gray-500 font-medium">Planta Completa Baterias Moura · Belo Jardim - PE</p>
+              </div>
+            </div>
+            <div class="text-left sm:text-right text-xs">
+              <div class="text-[#454545] font-black uppercase mb-1">CLIENTE: BATERIAS MOURA</div>
+              <div class="inline-block bg-[#FEF1E0] text-[#A86800] font-black px-2.5 py-1 rounded-md border border-[#F6D8B5] mb-1">
+                PROJETO: MOURA-015-2026-ELE-DE-002
+              </div>
+              <p class="text-[11px] text-gray-500">Emissão: <span id="relatorioDataHoraEmissao" class="font-bold text-gray-700"></span> · Rev. 01</p>
+            </div>
+          </div>
+
+          <!-- RESUMO EXECUTIVO (KPIs) -->
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-6">
+            <div class="p-3 bg-[#FAFAF8] border border-gray-200 rounded-xl text-center">
+              <span class="block text-[11px] font-bold text-gray-500 uppercase">Total Atividades</span>
+              <span id="kpiTotal" class="text-xl font-black text-[#454545]">0</span>
+            </div>
+            <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-center">
+              <span class="block text-[11px] font-bold text-[#008f00] uppercase">Concluídas</span>
+              <span id="kpiConcluidas" class="text-xl font-black text-[#00B800]">0</span>
+            </div>
+            <div class="p-3 bg-[#FEF1E0] border border-[#F6D8B5] rounded-xl text-center">
+              <span class="block text-[11px] font-bold text-[#A86800] uppercase">Em Andamento</span>
+              <span id="kpiAndamento" class="text-xl font-black text-[#A86800]">0</span>
+            </div>
+            <div class="p-3 bg-red-50 border border-red-200 rounded-xl text-center">
+              <span class="block text-[11px] font-bold text-red-600 uppercase">Bloqueadas</span>
+              <span id="kpiBloqueadas" class="text-xl font-black text-red-600">0</span>
+            </div>
+            <div class="p-3 bg-[#EDEDED] border border-gray-300 rounded-xl text-center">
+              <span class="block text-[11px] font-bold text-[#454545] uppercase">Não Iniciadas</span>
+              <span id="kpiNaoIniciadas" class="text-xl font-black text-[#454545]">0</span>
+            </div>
+          </div>
+
+          <!-- TABELA DE ATIVIDADES ESTRUTURADA (BALÃO, ÁREA, QUADRO, LINHA, MÁQUINA, ATIVIDADE, RESPONSÁVEL, DATA, STATUS) -->
+          <div class="overflow-x-auto rounded-lg border border-gray-200 mb-6">
+            <table class="w-full text-left text-xs bg-white">
+              <thead class="bg-[#454545] text-white font-bold border-b border-gray-300">
+                <tr>
+                  <th class="p-2.5 text-center w-14">Balão</th>
+                  <th class="p-2.5 w-32">Área / Setor</th>
+                  <th class="p-2.5 w-44">Quadro</th>
+                  <th class="p-2.5 w-28">Linha / Roche</th>
+                  <th class="p-2.5 w-28">Máquina</th>
+                  <th class="p-2.5">Descrição da Atividade de Campo</th>
+                  <th class="p-2.5 w-28">Responsável</th>
+                  <th class="p-2.5 w-24 text-center">Data</th>
+                  <th class="p-2.5 w-28 text-center">Status</th>
+                </tr>
+              </thead>
+              <tbody id="relatorioTbody" class="divide-y divide-gray-100">
+                <!-- Preenchido dinamicamente -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- RODAPÉ INSTITUCIONAL OFICIAL TDI DO RELATÓRIO -->
+          <div class="mt-8 pt-4 border-t-2 border-[#00B800] text-center text-xs text-gray-500 space-y-1">
+            <p class="font-bold text-[#454545]">TDI AUTOMAÇÃO | MOURA-015-2026-ELE-DE-002 | EMPASTAMENTO, MONTAGEM, ACABAMENTO & ROCHES</p>
+            <p class="text-[11px] font-medium text-[#454545]">TDI TECNOLOGIA EM CONTROLE E AUTOMAÇÃO LTDA · CNPJ: 43.165.662/0001-24</p>
+            <p class="text-[10px] text-gray-400">Av. General San Martin, 850 — Cordeiro, Recife - PE · Fone: (81) 98197-8434 · comercial@tdiautomacao.com · www.tdiautomacao.com</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RODAPÉ INSTITUCIONAL TDI (Normas da Identidade Visual) -->
+  <footer class="mt-10 border-t-2 border-[#00B800] pt-6 pb-8 text-center text-xs text-gray-500 space-y-1">
+    <p class="font-bold text-[#454545] tracking-wide">TDI AUTOMAÇÃO | MOURA-015-2026-ELE-DE-002 | EMPASTAMENTO, MONTAGEM, ACABAMENTO & ROCHES | Revisão 00</p>
+    <p class="text-[11px] font-semibold text-[#454545]">TDI TECNOLOGIA EM CONTROLE E AUTOMAÇÃO LTDA · CNPJ: 43.165.662/0001-24</p>
+    <p class="text-[10px] text-gray-400">AV. GENERAL SAN MARTIN, 850 / CEP 50761-000 - CORDEIRO, RECIFE - PE · FONE (81) 98197-8434 · COMERCIAL@TDIAUTOMACAO.COM · <a href="https://www.tdiautomacao.com" target="_blank" class="text-[#00B800] hover:underline">WWW.TDIAUTOMACAO.COM</a></p>
+    <p class="text-[10px] text-gray-400 pt-1 italic">Todas as modificações de atividades e balões são salvas automaticamente no armazenamento local do seu navegador.</p>
+  </footer>
+
+  <script>
+    // =============================================================
+    // DADOS MESTRES DOS QUATRO SETORES INDUSTRIAIS DA PLANTA
+    // =============================================================
+
+    // 1. SETOR DE EMPASTAMENTO (5 Máquinas no fluxo da linha)
+    const MAQUINAS_EMPASTAMENTO = [
+      "EMPASTADEIRA",
+      "STACKER",
+      "MASSEIRA",
+      "ACUMULADORA",
+      "EXPANSORA"
+    ];
+
+    const ESTRUTURA_EMPASTAMENTO = [
+      { id: "Q01", titulo: "QUADRO 1 (LIE04 E LIE05)", linhas: [{ nome: "LINHA 04", equipamentos: [...MAQUINAS_EMPASTAMENTO] }, { nome: "LINHA 05", equipamentos: [...MAQUINAS_EMPASTAMENTO] }] },
+      { id: "Q02", titulo: "QUADRO 2 (LIE06 E LIE07)", linhas: [{ nome: "LINHA 06", equipamentos: [...MAQUINAS_EMPASTAMENTO] }, { nome: "LINHA 07", equipamentos: [...MAQUINAS_EMPASTAMENTO] }] },
+      { id: "Q03", titulo: "QUADRO 03 (LIE08 E LIE09)", linhas: [{ nome: "LINHA 08", equipamentos: [...MAQUINAS_EMPASTAMENTO] }, { nome: "LINHA 09", equipamentos: [...MAQUINAS_EMPASTAMENTO] }] },
+      { id: "Q04", titulo: "QUADRO 04 (LIE10 E LIE11)", linhas: [{ nome: "LINHA 10", equipamentos: [...MAQUINAS_EMPASTAMENTO] }, { nome: "LINHA 11", equipamentos: [...MAQUINAS_EMPASTAMENTO] }] },
+      { id: "Q05", titulo: "QUADRO 05 (LIE12)", linhas: [{ nome: "LINHA 12", equipamentos: [...MAQUINAS_EMPASTAMENTO] }] },
+      { id: "Q06", titulo: "QUADRO 06 (LIE01)*", linhas: [{ nome: "LINHA 01", equipamentos: [...MAQUINAS_EMPASTAMENTO] }] }
+    ];
+
+    // 2. SETOR DE MONTAGEM (12 Quadros · 7 Estações: EVP a TVZ)
+    const ESTACOES_MONTAGEM = ["EVP", "COS", "SIC", "TCC", "SLR", "LVB", "TVZ"];
+    const ESTRUTURA_MONTAGEM = [
+      { id: "MQ01", numero: "01", titulo: "QUADRO 01", linhaNome: "LINHA 01", fornecimentoTDI: false, linhas: [{ nome: "LINHA 01", equipamentos: [...ESTACOES_MONTAGEM] }] },
+      { id: "MQ02", numero: "02", titulo: "QUADRO 02", linhaNome: "LINHA 02", fornecimentoTDI: false, linhas: [{ nome: "LINHA 02", equipamentos: [...ESTACOES_MONTAGEM] }] },
+      { id: "MQ03", numero: "03", titulo: "QUADRO 03 (TDI)", linhaNome: "LINHA 03", fornecimentoTDI: true, linhas: [{ nome: "LINHA 03", equipamentos: [...ESTACOES_MONTAGEM] }] },
+      { id: "MQ04", numero: "04", titulo: "QUADRO 04 (TDI)", linhaNome: "LINHA 04", fornecimentoTDI: true, linhas: [{ nome: "LINHA 04", equipamentos: [...ESTACOES_MONTAGEM] }] },
+      { id: "MQ05", numero: "05", titulo: "QUADRO 05 (TDI)", linhaNome: "LINHA 05", fornecimentoTDI: true, linhas: [{ nome: "LINHA 05", equipamentos: [...ESTACOES_MONTAGEM] }] },
+      { id: "MQ06", numero: "06", titulo: "QUADRO 06", linhaNome: "LINHA 06", fornecimentoTDI: false, linhas: [{ nome: "LINHA 06", equipamentos: [...ESTACOES_MONTAGEM] }] },
+      { id: "MQ07", numero: "07", titulo: "QUADRO 07", linhaNome: "LINHA 07", fornecimentoTDI: false, linhas: [{ nome: "LINHA 07", equipamentos: [...ESTACOES_MONTAGEM] }] },
+      { id: "MQ08", numero: "08", titulo: "QUADRO 08", linhaNome: "LINHA 07 (Q08)", fornecimentoTDI: false, linhas: [{ nome: "LINHA 07 (Q08)", equipamentos: [...ESTACOES_MONTAGEM] }] },
+      { id: "MQ09", numero: "09", titulo: "QUADRO 09 (TDI)", linhaNome: "LINHA 09", fornecimentoTDI: true, linhas: [{ nome: "LINHA 09", equipamentos: [...ESTACOES_MONTAGEM] }] },
+      { id: "MQ10", numero: "10", titulo: "QUADRO 10 (TDI)", linhaNome: "LINHA 10", fornecimentoTDI: true, linhas: [{ nome: "LINHA 10", equipamentos: [...ESTACOES_MONTAGEM] }] },
+      { id: "MQ11", numero: "11", titulo: "QUADRO 11 (TDI)", linhaNome: "LINHA 13", fornecimentoTDI: true, linhas: [{ nome: "LINHA 13", equipamentos: [...ESTACOES_MONTAGEM] }] },
+      { id: "MQ12", numero: "12", titulo: "QUADRO 12", linhaNome: "LINHA 14", fornecimentoTDI: false, linhas: [{ nome: "LINHA 14", equipamentos: [...ESTACOES_MONTAGEM] }] }
+    ];
+
+    // 3. SETOR DE ACABAMENTO (7 Quadros: Linhas 01 a 05, INSP e AGM · 11 Máquinas)
+    const MAQUINAS_ACABAMENTO = ["MAN", "TNV", "TAD", "SLR", "TVZ", "MSB", "TVD", "MRT", "COD", "PLT", "EMP"];
+    const ESTRUTURA_ACABAMENTO = [
+      { id: "AQ01", numero: "01", titulo: "QUADRO 01", linhaNome: "LINHA 01", linhas: [{ nome: "LINHA 01", equipamentos: [...MAQUINAS_ACABAMENTO] }] },
+      { id: "AQ02", numero: "02", titulo: "QUADRO 02", linhaNome: "LINHA 02", linhas: [{ nome: "LINHA 02", equipamentos: [...MAQUINAS_ACABAMENTO] }] },
+      { id: "AQ03", numero: "03", titulo: "QUADRO 03", linhaNome: "LINHA 03", linhas: [{ nome: "LINHA 03", equipamentos: [...MAQUINAS_ACABAMENTO] }] },
+      { id: "AQ04", numero: "04", titulo: "QUADRO 04", linhaNome: "LINHA 04", linhas: [{ nome: "LINHA 04", equipamentos: [...MAQUINAS_ACABAMENTO] }] },
+      { id: "AQ05", numero: "05", titulo: "QUADRO 05", linhaNome: "LINHA 05", linhas: [{ nome: "LINHA 05", equipamentos: [...MAQUINAS_ACABAMENTO] }] },
+      { id: "AQ06", numero: "INSP", titulo: "QUADRO INSP", linhaNome: "LINHA INSP", linhas: [{ nome: "LINHA INSP", equipamentos: [...MAQUINAS_ACABAMENTO] }] },
+      { id: "AQ07", numero: "AGM", titulo: "QUADRO AGM", linhaNome: "LINHA AGM", linhas: [{ nome: "LINHA AGM", equipamentos: [...MAQUINAS_ACABAMENTO] }] }
+    ];
+
+    // 4. SETOR DE ROCHES (GRADES EXPANDIDAS)
+    // Conforme exatamente o print:
+    // QUADRO 1 -> GRADES EXPANDIDAS -> 4 Roches: ROCHE 01, ROCHE 02, ROCHE 03, ROCHE 04
+    // QUADRO 2 -> GRADES EXPANDIDAS -> 3 Roches: ROCHE 05, ROCHE 06, ROCHE 07
+    // Cada Roche conta com: EXPANSORA (topo) e COMINCO / PROPERZI (estações de lingotamento/alimentação)
+    const MAQUINAS_ROCHES = ["EXPANSORA", "COMINCO", "PROPERZI"];
+
+    const ESTRUTURA_ROCHES = [
+      {
+        id: "RQ01",
+        titulo: "QUADRO 1 (GRADES EXPANDIDAS)",
+        subtitulo: "GRADES EXPANDIDAS - 4 ROCHES",
+        linhas: [
+          { nome: "ROCHE 01", equipamentos: [...MAQUINAS_ROCHES] },
+          { nome: "ROCHE 02", equipamentos: [...MAQUINAS_ROCHES] },
+          { nome: "ROCHE 03", equipamentos: [...MAQUINAS_ROCHES] },
+          { nome: "ROCHE 04", equipamentos: [...MAQUINAS_ROCHES] }
+        ]
+      },
+      {
+        id: "RQ02",
+        titulo: "QUADRO 2 (GRADES EXPANDIDAS)",
+        subtitulo: "GRADES EXPANDIDAS - 3 ROCHES",
+        linhas: [
+          { nome: "ROCHE 05", equipamentos: [...MAQUINAS_ROCHES] },
+          { nome: "ROCHE 06", equipamentos: [...MAQUINAS_ROCHES] },
+          { nome: "ROCHE 07", equipamentos: [...MAQUINAS_ROCHES] }
+        ]
+      }
+    ];
+
+    // ATIVIDADES INICIAIS
+    const ATIVIDADES_INICIAIS = [
+      // Empastamento
+      { id: "act-1", setor: "EMPASTAMENTO", quadro: "Q01", linha: "LINHA 04", equipamento: "EXPANSORA", numeroBalao: "01", descricao: "Lançamento de eletroduto rígido e cabo CAT6 blindado.", responsavel: "Equipe Infra", status: "CONCLUIDO", data: "2026-09-28" },
+      { id: "act-2", setor: "EMPASTAMENTO", quadro: "Q01", linha: "LINHA 04", equipamento: "ACUMULADORA", numeroBalao: "02", descricao: "Instalação e alinhamento do sensor de presença de fita.", responsavel: "Instrumentação", status: "EM_ANDAMENTO", data: "2026-09-29" },
+      // Montagem
+      { id: "act-m1", setor: "MONTAGEM", quadro: "MQ03", linha: "LINHA 03", equipamento: "EVP", numeroBalao: "01", descricao: "Montagem do novo painel fornecido pela TDI e descida de cabos.", responsavel: "TDI Montagem", status: "CONCLUIDO", data: "2026-09-29" },
+      { id: "act-m2", setor: "MONTAGEM", quadro: "MQ01", linha: "LINHA 01", equipamento: "SIC", numeroBalao: "02", descricao: "Adequação elétrica no painel existente do cliente (sem fornecimento).", responsavel: "Equipe Elétrica", status: "EM_ANDAMENTO", data: "2026-10-02" },
+      // Acabamento
+      { id: "act-a1", setor: "ACABAMENTO", quadro: "AQ02", linha: "LINHA 02", equipamento: "MAN", numeroBalao: "01", descricao: "Instalação de caixa de passagem na máquina MAN da Linha 02.", responsavel: "Elétrica Acabamento", status: "CONCLUIDO", data: "2026-09-29" },
+      // Roches (Exemplos)
+      { id: "act-r1", setor: "ROCHES", quadro: "RQ01", linha: "ROCHE 01", equipamento: "EXPANSORA", numeroBalao: "01", descricao: "Calibração do encoder e sensores de corte da Expansora Roche 01.", responsavel: "Automação TDI", status: "CONCLUIDO", data: "2026-09-28" },
+      { id: "act-r2", setor: "ROCHES", quadro: "RQ01", linha: "ROCHE 02", equipamento: "COMINCO", numeroBalao: "02", descricao: "Ligação elétrica do forno de fundição e controle de fita Cominco.", responsavel: "Elétrica Infra", status: "EM_ANDAMENTO", data: "2026-09-30" },
+      { id: "act-r3", setor: "ROCHES", quadro: "RQ02", linha: "ROCHE 05", equipamento: "PROPERZI", numeroBalao: "03", descricao: "Interligação de segurança e esteira de lingotes Properzi na Roche 05.", responsavel: "Equipe TDI", status: "NAO_INICIADO", data: "2026-10-02" }
+    ];
+
+    // ESTADO GLOBAL DA APLICAÇÃO
+    let atividades = [];
+    let setorAtivo = "EMPASTAMENTO"; // 'EMPASTAMENTO', 'MONTAGEM', 'ACABAMENTO' ou 'ROCHES'
+    let filtroQuadroAtivo = "TODOS";
+    let filtroStatusAtivo = null;
+    let filtroFornecimentoMontagem = "TODOS"; // 'TODOS', 'TDI', 'EXISTENTE'
+
+    function init() {
+      const salvo = localStorage.getItem("tdi_moura_atividades_v4");
+      if (salvo) {
+        try {
+          atividades = JSON.parse(salvo);
+        } catch(e) {
+          atividades = ATIVIDADES_INICIAIS;
+        }
+      } else {
+        atividades = ATIVIDADES_INICIAIS;
+        salvarNoLocalStorage();
+      }
+      atualizarBarraFiltros();
+      renderizarEstrutura();
+      aoMudarSetorModal();
+    }
+
+    function salvarNoLocalStorage() {
+      localStorage.setItem("tdi_moura_atividades_v4", JSON.stringify(atividades));
+    }
+
+    // ALTERNAR ENTRE AS QUATRO TELAS
+    function alternarTela(novoSetor) {
+      setorAtivo = novoSetor;
+      filtroQuadroAtivo = "TODOS";
+      filtroStatusAtivo = null;
+
+      const btnEmp = document.getElementById("btnAbaEmpastamento");
+      const btnMon = document.getElementById("btnAbaMontagem");
+      const btnAcab = document.getElementById("btnAbaAcabamento");
+      const btnRoc = document.getElementById("btnAbaRoches");
+
+      const classesInativo = "tab-btn px-3 py-2 rounded-xl border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 text-xs font-black flex items-center gap-1.5 transition shadow-sm";
+      const classesAtivo = "tab-btn active px-3 py-2 rounded-xl border text-xs font-black flex items-center gap-1.5 transition shadow-sm bg-[#454545] text-white border-[#454545]";
+
+      btnEmp.className = setorAtivo === "EMPASTAMENTO" ? classesAtivo : classesInativo;
+      btnMon.className = setorAtivo === "MONTAGEM" ? classesAtivo : classesInativo;
+      btnAcab.className = setorAtivo === "ACABAMENTO" ? classesAtivo : classesInativo;
+      btnRoc.className = setorAtivo === "ROCHES" ? classesAtivo : classesInativo;
+
+      atualizarBarraFiltros();
+      renderizarEstrutura();
+    }
+
+    // ATUALIZAR BARRA DE FILTROS DEPENDENDO DA TELA
+    function atualizarBarraFiltros() {
+      const barra = document.getElementById("barraFiltros");
+      const info = document.getElementById("labelInfoSetor");
+
+      if (setorAtivo === "EMPASTAMENTO") {
+        info.textContent = "Setor de Empastamento: 6 Quadros LIE · 5 Máquinas do Fluxo Contínuo";
+        barra.innerHTML = `
+          <div class="flex items-center flex-wrap gap-1.5">
+            <span class="text-[11px] font-bold text-gray-500 uppercase mr-1">Filtrar Quadro:</span>
+            <button onclick="filtrarQuadro('TODOS')" class="filtro-btn px-2.5 py-1 rounded-lg border text-xs font-bold ${filtroQuadroAtivo === 'TODOS' ? 'bg-[#454545] text-white border-[#454545]' : 'bg-white text-gray-700 border-gray-300'}" data-quadro="TODOS">Todos (01 a 06)</button>
+            <button onclick="filtrarQuadro('Q01')" class="filtro-btn px-2.5 py-1 rounded-lg border text-xs font-semibold ${filtroQuadroAtivo === 'Q01' ? 'bg-[#454545] text-white border-[#454545]' : 'bg-white text-gray-700 border-gray-300'}">Q01 (LIE04/05)</button>
+            <button onclick="filtrarQuadro('Q02')" class="filtro-btn px-2.5 py-1 rounded-lg border text-xs font-semibold ${filtroQuadroAtivo === 'Q02' ? 'bg-[#454545] text-white border-[#454545]' : 'bg-white text-gray-700 border-gray-300'}">Q02 (LIE06/07)</button>
+            <button onclick="filtrarQuadro('Q03')" class="filtro-btn px-2.5 py-1 rounded-lg border text-xs font-semibold ${filtroQuadroAtivo === 'Q03' ? 'bg-[#454545] text-white border-[#454545]' : 'bg-white text-gray-700 border-gray-300'}">Q03 (LIE08/09)</button>
+            <button onclick="filtrarQuadro('Q04')" class="filtro-btn px-2.5 py-1 rounded-lg border text-xs font-semibold ${filtroQuadroAtivo === 'Q04' ? 'bg-[#454545] text-white border-[#454545]' : 'bg-white text-gray-700 border-gray-300'}">Q04 (LIE10/11)</button>
+            <button onclick="filtrarQuadro('Q05')" class="filtro-btn px-2.5 py-1 rounded-lg border text-xs font-semibold ${filtroQuadroAtivo === 'Q05' ? 'bg-[#454545] text-white border-[#454545]' : 'bg-white text-gray-700 border-gray-300'}">Q05 (LIE12)</button>
+            <button onclick="filtrarQuadro('Q06')" class="filtro-btn px-2.5 py-1 rounded-lg border text-xs font-semibold ${filtroQuadroAtivo === 'Q06' ? 'bg-[#454545] text-white border-[#454545]' : 'bg-white text-gray-700 border-gray-300'}">Q06 (LIE01)*</button>
+          </div>
+        `;
+      } else if (setorAtivo === "MONTAGEM") {
+        info.textContent = "Setor de Montagem: 12 Quadros · 7 Estações (EVP, COS, SIC, TCC, SLR, LVB, TVZ)";
+        barra.innerHTML = `
+          <div class="flex items-center flex-wrap gap-2 w-full">
+            <div class="flex items-center gap-1.5 border-r border-gray-200 pr-3 mr-1">
+              <span class="text-[11px] font-bold text-gray-500 uppercase">Escopo:</span>
+              <button onclick="filtrarFornecimento('TODOS')" class="px-2.5 py-1 rounded-lg border text-xs font-bold ${filtroFornecimentoMontagem === 'TODOS' ? 'bg-[#454545] text-white border-[#454545]' : 'bg-white text-gray-700 border-gray-300'}">Todos (12)</button>
+              <button onclick="filtrarFornecimento('TDI')" class="px-2.5 py-1 rounded-lg border text-xs font-bold ${filtroFornecimentoMontagem === 'TDI' ? 'bg-[#00B800] text-white border-[#00B800]' : 'bg-white text-[#008f00] border-[#00B800]/40'} flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-white"></span> Fornecimento TDI (6)
+              </button>
+              <button onclick="filtrarFornecimento('EXISTENTE')" class="px-2.5 py-1 rounded-lg border text-xs font-bold ${filtroFornecimentoMontagem === 'EXISTENTE' ? 'bg-[#A86800] text-white border-[#A86800]' : 'bg-white text-[#A86800] border-amber-300'} flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-amber-400"></span> Alteração Existente (6)
+              </button>
+            </div>
+
+            <div class="flex items-center flex-wrap gap-1">
+              <span class="text-[11px] font-bold text-gray-500 uppercase mr-1">Quadro:</span>
+              <button onclick="filtrarQuadro('TODOS')" class="px-2 py-0.5 rounded border text-[11px] font-bold ${filtroQuadroAtivo === 'TODOS' ? 'bg-[#454545] text-white' : 'bg-white text-gray-700'}">Todos</button>
+              ${ESTRUTURA_MONTAGEM.map(q => `
+                <button onclick="filtrarQuadro('${q.id}')" class="px-2 py-0.5 rounded border text-[11px] font-bold ${filtroQuadroAtivo === q.id ? 'bg-[#454545] text-white' : (q.fornecimentoTDI ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : 'bg-amber-50 text-amber-800 border-amber-200')}">
+                  Q${q.numero}${q.fornecimentoTDI ? '*' : ''}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else if (setorAtivo === "ACABAMENTO") {
+        info.textContent = "Setor de Acabamento: 7 Quadros (Linhas 01-05, INSP e AGM) · 11 Máquinas (MAN a EMP)";
+        barra.innerHTML = `
+          <div class="flex items-center flex-wrap gap-1.5">
+            <span class="text-[11px] font-bold text-gray-500 uppercase mr-1">Filtrar Quadro:</span>
+            <button onclick="filtrarQuadro('TODOS')" class="filtro-btn px-2.5 py-1 rounded-lg border text-xs font-bold ${filtroQuadroAtivo === 'TODOS' ? 'bg-[#454545] text-white border-[#454545]' : 'bg-white text-gray-700 border-gray-300'}">Todos (7 Quadros)</button>
+            <button onclick="filtrarQuadro('AQ01')" class="filtro-btn px-2.5 py-1 rounded-lg border text-xs font-semibold ${filtroQuadroAtivo === 'AQ01' ? 'bg-[#454545] text-white' : 'bg-white text-gray-700'}">Q01 (Linha 01)</button>
+            <button onclick="filtrarQuadro('AQ02')" class="filtro-btn px-2.5 py-1 rounded-lg border text-xs font-semibold ${filtroQuadroAtivo === 'AQ02' ? 'bg-[#454545] text-white' : 'bg-white text-gray-700'}">Q02 (Linha 02)</button>
+            <button onclick="filtrarQuadro('AQ03')" class="filtro-btn px-2.5 py-1 rounded-lg border text-xs font-semibold ${filtroQuadroAtivo === 'AQ03' ? 'bg-[#454545] text-white' : 'bg-white text-gray-700'}">Q03 (Linha 03)</button>
+            <button onclick="filtrarQuadro('AQ04')" class="filtro-btn px-2.5 py-1 rounded-lg border text-xs font-semibold ${filtroQuadroAtivo === 'AQ04' ? 'bg-[#454545] text-white' : 'bg-white text-gray-700'}">Q04 (Linha 04)</button>
+            <button onclick="filtrarQuadro('AQ05')" class="filtro-btn px-2.5 py-1 rounded-lg border text-xs font-semibold ${filtroQuadroAtivo === 'AQ05' ? 'bg-[#454545] text-white' : 'bg-white text-gray-700'}">Q05 (Linha 05)</button>
+            <button onclick="filtrarQuadro('AQ06')" class="filtro-btn px-2.5 py-1 rounded-lg border text-xs font-bold ${filtroQuadroAtivo === 'AQ06' ? 'bg-[#00B800] text-white border-[#00B800]' : 'bg-emerald-50 text-emerald-800 border-emerald-300'}">Q.INSP (Linha INSP)</button>
+            <button onclick="filtrarQuadro('AQ07')" class="filtro-btn px-2.5 py-1 rounded-lg border text-xs font-bold ${filtroQuadroAtivo === 'AQ07' ? 'bg-[#00B800] text-white border-[#00B800]' : 'bg-emerald-50 text-emerald-800 border-emerald-300'}">Q.AGM (Linha AGM)</button>
+          </div>
+        `;
+      } else {
+        // ROCHES
+        info.textContent = "Setor de Roches (Grades Expandidas): Quadro 1 (Roches 01 a 04) · Quadro 2 (Roches 05 a 07)";
+        barra.innerHTML = `
+          <div class="flex items-center flex-wrap gap-2">
+            <span class="text-[11px] font-bold text-gray-500 uppercase mr-1">Filtrar Quadro:</span>
+            <button onclick="filtrarQuadro('TODOS')" class="filtro-btn px-3 py-1 rounded-lg border text-xs font-bold ${filtroQuadroAtivo === 'TODOS' ? 'bg-[#454545] text-white border-[#454545]' : 'bg-white text-gray-700 border-gray-300'}">Todos (Quadro 1 e 2)</button>
+            <button onclick="filtrarQuadro('RQ01')" class="filtro-btn px-3 py-1 rounded-lg border text-xs font-semibold ${filtroQuadroAtivo === 'RQ01' ? 'bg-[#454545] text-white' : 'bg-white text-gray-700 border-gray-300'}">Quadro 1 (Roches 01, 02, 03, 04)</button>
+            <button onclick="filtrarQuadro('RQ02')" class="filtro-btn px-3 py-1 rounded-lg border text-xs font-semibold ${filtroQuadroAtivo === 'RQ02' ? 'bg-[#454545] text-white' : 'bg-white text-gray-700 border-gray-300'}">Quadro 2 (Roches 05, 06, 07)</button>
+          </div>
+        `;
+      }
+    }
+
+    // RENDERIZAR O DIAGRAMA CONFORME A TELA ATIVA
+    function renderizarEstrutura() {
+      const container = document.getElementById("quadrosContainer");
+      container.innerHTML = "";
+
+      let listaEstrutura = [];
+      if (setorAtivo === "EMPASTAMENTO") listaEstrutura = ESTRUTURA_EMPASTAMENTO;
+      else if (setorAtivo === "MONTAGEM") listaEstrutura = ESTRUTURA_MONTAGEM;
+      else if (setorAtivo === "ACABAMENTO") listaEstrutura = ESTRUTURA_ACABAMENTO;
+      else listaEstrutura = ESTRUTURA_ROCHES;
+
+      let quadrosFiltrados = listaEstrutura;
+
+      // Filtros de montagem por fornecimento
+      if (setorAtivo === "MONTAGEM" && filtroFornecimentoMontagem !== "TODOS") {
+        const apenasTDI = filtroFornecimentoMontagem === "TDI";
+        quadrosFiltrados = quadrosFiltrados.filter(q => q.fornecimentoTDI === apenasTDI);
+      }
+
+      // Filtro de quadro
+      if (filtroQuadroAtivo !== "TODOS") {
+        quadrosFiltrados = quadrosFiltrados.filter(q => q.id === filtroQuadroAtivo);
+      }
+
+      if (quadrosFiltrados.length === 0) {
+        container.innerHTML = `<div class="bg-white p-8 rounded-xl text-center text-gray-500">Nenhum quadro localizado com os filtros selecionados.</div>`;
+        return;
+      }
+
+      quadrosFiltrados.forEach(quadro => {
+        const card = document.createElement("article");
+        card.className = "quadro-card bg-white border border-gray-200 rounded-2xl p-5 shadow-sm";
+
+        const ehMontagem = setorAtivo === "MONTAGEM";
+        const ehRoches = setorAtivo === "ROCHES";
+        const ehAcabamento = setorAtivo === "ACABAMENTO";
+
+        // BADGE DE ESCOPO PARA MONTAGEM OU ROCHES
+        let badgeEscopo = '';
+        if (ehMontagem) {
+          if (quadro.fornecimentoTDI) {
+            badgeEscopo = `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-black bg-[#00B800] text-white shadow-xs">FORNECIMENTO TDI (PAINEL NOVO)</span>`;
+          } else {
+            badgeEscopo = `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-black bg-[#FEF1E0] text-[#A86800] border border-[#F6D8B5] shadow-xs">ALTERAÇÃO TDI (PAINEL EXISTENTE)</span>`;
+          }
+        } else if (ehRoches) {
+          badgeEscopo = `<span class="inline-flex items-center gap-1 px-3 py-1 rounded-md text-xs font-bold bg-[#FEF1E0] text-[#A86800] border border-[#F6D8B5]">GRADES EXPANDIDAS</span>`;
+        }
+
+        let html = `
+          <!-- BLOCO SUPERIOR: TÍTULO DO QUADRO COM VISUAL HIERÁRQUICO -->
+          <div class="flex flex-col items-center mb-4">
+            <div class="flex items-center gap-3">
+              <div class="inline-flex items-center gap-2.5 px-6 py-2 bg-gradient-to-r from-[#454545] to-gray-700 text-white rounded-xl shadow-md border border-gray-600">
+                <span class="w-3 h-3 rounded-full bg-[#00B800] ring-4 ring-[#00B800]/30"></span>
+                <span class="text-sm font-black uppercase tracking-wider">${quadro.titulo}</span>
+              </div>
+              ${badgeEscopo}
+            </div>
+            <!-- Conector Vertical -->
+            <div class="w-0.5 h-4 bg-[#00B800]"></div>
+        `;
+
+        // Se for ROCHES, adiciona a caixa intermediária 'GRADES EXPANDIDAS' exatamente como no print
+        if (ehRoches) {
+          html += `
+            <div class="px-5 py-1.5 bg-[#FAFAF8] border border-gray-300 rounded-lg text-xs font-black text-[#454545] uppercase tracking-wider shadow-xs mb-1">
+              GRADES EXPANDIDAS
+            </div>
+            <div class="w-0.5 h-4 bg-[#00B800]"></div>
+          `;
+        }
+
+        html += `</div>`; // fecha o bloco do topo
+
+        // RENDERIZAR LINHAS OU ROCHES
+        if (ehRoches) {
+          // Layout específico de Roches: Grid de 4 roches no Q1 e 3 roches no Q2
+          const numRoches = quadro.linhas.length;
+          const gridRochesClass = numRoches === 4 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' : 'grid-cols-1 sm:grid-cols-3';
+
+          html += `
+            <!-- ÁRVORE DAS ROCHES -->
+            <div class="grid ${gridRochesClass} gap-4 mb-4">
+          `;
+
+          quadro.linhas.forEach(roche => {
+            html += `
+              <div class="bg-[#FAFAF8] border-2 border-gray-300 rounded-xl p-3 flex flex-col items-center shadow-xs">
+                <!-- CABEÇALHO DA ROCHE -->
+                <div class="w-full text-center py-1.5 bg-[#454545] text-white rounded-lg text-xs font-black uppercase tracking-wider mb-3">
+                  ${roche.nome}
+                </div>
+
+                <!-- 1. BLOCO DA EXPANSORA (TOPO DA ROCHE) -->
+                <div class="w-full bg-white border border-gray-300 rounded-lg p-2.5 mb-2 hover:border-[#00B800] transition">
+                  <div class="flex items-center justify-between border-b border-gray-100 pb-1 mb-1.5">
+                    <span class="text-[11px] font-black uppercase text-[#454545]">EXPANSORA</span>
+                    <button onclick="adicionarAtividadeRapida('ROCHES', '${quadro.id}', '${roche.nome}', 'EXPANSORA')" class="text-[10px] text-[#00B800] hover:underline font-bold no-print">
+                      + Balão
+                    </button>
+                  </div>
+                  ${gerarHtmlBaloesEquip('ROCHES', quadro.id, roche.nome, 'EXPANSORA')}
+                </div>
+
+                <!-- Conector bifurcado para COMINCO e PROPERZI -->
+                <div class="w-0.5 h-2 bg-gray-300 mb-1"></div>
+
+                <!-- 2. BLOCO BIFURCADO: COMINCO E PROPERZI -->
+                <div class="grid grid-cols-2 gap-2 w-full">
+                  <!-- COMINCO -->
+                  <div class="bg-white border border-gray-300 rounded-lg p-2 hover:border-[#00B800] transition">
+                    <div class="flex items-center justify-between border-b border-gray-100 pb-1 mb-1.5">
+                      <span class="text-[10px] font-black uppercase text-[#454545]">COMINCO</span>
+                      <button onclick="adicionarAtividadeRapida('ROCHES', '${quadro.id}', '${roche.nome}', 'COMINCO')" class="text-[9px] text-[#00B800] hover:underline font-bold no-print">
+                        +
+                      </button>
+                    </div>
+                    ${gerarHtmlBaloesEquip('ROCHES', quadro.id, roche.nome, 'COMINCO')}
+                  </div>
+
+                  <!-- PROPERZI -->
+                  <div class="bg-white border border-gray-300 rounded-lg p-2 hover:border-[#00B800] transition">
+                    <div class="flex items-center justify-between border-b border-gray-100 pb-1 mb-1.5">
+                      <span class="text-[10px] font-black uppercase text-[#454545]">PROPERZI</span>
+                      <button onclick="adicionarAtividadeRapida('ROCHES', '${quadro.id}', '${roche.nome}', 'PROPERZI')" class="text-[9px] text-[#00B800] hover:underline font-bold no-print">
+                        +
+                      </button>
+                    </div>
+                    ${gerarHtmlBaloesEquip('ROCHES', quadro.id, roche.nome, 'PROPERZI')}
+                  </div>
+                </div>
+              </div>
+            `;
+          });
+
+          html += `</div>`; // fim do grid de roches
+
+        } else {
+          // Layout normal de Empastamento, Montagem ou Acabamento
+          const temDuasLinhas = quadro.linhas.length === 2;
+
+          if (temDuasLinhas) {
+            html += `<div class="relative w-full flex flex-col md:flex-row gap-6 before:hidden md:before:block before:content-[''] before:absolute before:top-0 before:left-1/4 before:right-1/4 before:h-0.5 before:bg-[#00B800]">`;
+          } else {
+            html += `<div class="w-full">`;
+          }
+
+          quadro.linhas.forEach((linha) => {
+            const numCols = linha.equipamentos.length;
+            let gridColsClass = 'grid-cols-5';
+            if (numCols === 7) gridColsClass = 'grid-cols-2 sm:grid-cols-4 md:grid-cols-7';
+            if (numCols === 11) gridColsClass = 'grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-11';
+
+            let subtituloLinha = '5 Máquinas do Empastamento';
+            if (ehMontagem) subtituloLinha = '7 Estações da Montagem (EVP a TVZ)';
+            if (ehAcabamento) subtituloLinha = '11 Máquinas do Acabamento (MAN a EMP)';
+
+            html += `
+              <div class="${temDuasLinhas ? 'w-full md:w-1/2' : 'w-full'} flex flex-col items-center">
+                ${temDuasLinhas ? '<div class="hidden md:block w-0.5 h-3 bg-[#00B800] -mt-0.5 mb-1"></div>' : ''}
+                
+                <div class="w-full bg-[#FAFAF8] border border-gray-300 rounded-xl p-3.5 shadow-xs mb-3">
+                  <div class="flex items-center justify-between border-b border-gray-200 pb-2 mb-3">
+                    <div class="flex items-center gap-2">
+                      <span class="px-2.5 py-0.5 rounded bg-[#454545] text-white text-xs font-black tracking-wide">${linha.nome}</span>
+                      <span class="text-[11px] text-gray-500 font-semibold uppercase">${subtituloLinha}</span>
+                    </div>
+                    <button onclick="adicionarAtividadeParaLinha('${setorAtivo}', '${quadro.id}', '${linha.nome}')" class="text-xs text-[#00B800] hover:text-[#009e00] font-bold no-print">
+                      + Balão nesta Linha
+                    </button>
+                  </div>
+
+                  <div class="grid ${gridColsClass} gap-1.5 sm:gap-2">
+            `;
+
+            linha.equipamentos.forEach((equip) => {
+              html += `
+                <div class="bg-white border border-gray-200 rounded-lg p-2 flex flex-col justify-between hover:border-[#00B800] transition">
+                  <div class="text-center pb-1 border-b border-gray-100">
+                    <div class="text-[10px] sm:text-[11px] font-black uppercase text-[#454545] tracking-tight leading-tight" title="${equip}">
+                      ${equip}
+                    </div>
+                  </div>
+
+                  <div class="min-h-[48px] my-1.5 p-1 bg-gray-50 rounded flex flex-wrap items-center justify-center gap-1 border border-dashed border-gray-200">
+                    ${gerarHtmlBaloesEquip(setorAtivo, quadro.id, linha.nome, equip)}
+                  </div>
+
+                  <button onclick="adicionarAtividadeRapida('${setorAtivo}', '${quadro.id}', '${linha.nome}', '${equip}')" class="w-full text-center py-1 text-[10px] text-gray-500 hover:text-[#00B800] hover:bg-[#00B800]/10 rounded font-bold transition no-print">
+                    + Balão
+                  </button>
+                </div>
+              `;
+            });
+
+            html += `
+                  </div>
+                </div>
+              </div>
+            `;
+          });
+
+          html += `</div>`;
+        }
+
+        // TABELA DETALHADA DE ATIVIDADES DESTE QUADRO
+        const atividadesDoQuadro = atividades.filter(a => 
+          a.setor === setorAtivo &&
+          a.quadro === quadro.id &&
+          (!filtroStatusAtivo || a.status === filtroStatusAtivo)
+        );
+
+        let colunaEquipLabel = 'Máquina';
+        if (ehMontagem) colunaEquipLabel = 'Estação';
+        if (ehRoches) colunaEquipLabel = 'Equipamento';
+
+        html += `
+          <!-- TABELA DE ATIVIDADES DO QUADRO -->
+          <div class="mt-4 pt-3 border-t border-gray-100">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="text-xs font-bold text-[#454545] uppercase tracking-wide flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-[#454545]"></span>
+                Atividades e Balões Alocados — ${quadro.titulo} (${atividadesDoQuadro.length})
+              </h4>
+            </div>
+
+            <div class="overflow-x-auto rounded-lg border border-gray-200">
+              <table class="w-full text-left text-xs bg-white">
+                <thead class="bg-[#EDEDED] text-[#454545] font-bold border-b border-gray-300">
+                  <tr>
+                    <th class="p-2 w-16 text-center">Balão</th>
+                    <th class="p-2 w-28">${ehRoches ? 'Roche' : 'Linha'}</th>
+                    <th class="p-2 w-32">${colunaEquipLabel}</th>
+                    <th class="p-2">Descrição da Atividade de Campo</th>
+                    <th class="p-2 w-28">Responsável</th>
+                    <th class="p-2 w-28">Status</th>
+                    <th class="p-2 w-24">Data Prevista</th>
+                    <th class="p-2 w-16 text-center no-print">Ação</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+        `;
+
+        if (atividadesDoQuadro.length === 0) {
+          html += `
+            <tr>
+              <td colspan="8" class="p-3 text-center text-gray-400 italic">
+                Nenhuma atividade alocada para este quadro. Clique em "+ Balão" no bloco acima para cadastrar.
+              </td>
+            </tr>
+          `;
+        } else {
+          atividadesDoQuadro.forEach(act => {
+            let statusBadge = '';
+            let badgeBg = '';
+            if (act.status === 'CONCLUIDO') {
+              statusBadge = '<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-[#00B800]/15 text-[#008f00] border border-[#00B800]/40">Concluído</span>';
+              badgeBg = 'bg-[#00B800] text-white border-2 border-[#009e00]';
+            } else if (act.status === 'EM_ANDAMENTO') {
+              statusBadge = '<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-[#FEF1E0] text-[#A86800] border border-[#F6D8B5]">Em Andamento</span>';
+              badgeBg = 'bg-[#FEF1E0] text-[#A86800] border-2 border-[#F6D8B5]';
+            } else if (act.status === 'BLOQUEADO') {
+              statusBadge = '<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-red-50 text-red-700 border border-red-200">Bloqueado</span>';
+              badgeBg = 'bg-red-100 text-red-700 border-2 border-red-400';
+            } else {
+              statusBadge = '<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-[#EDEDED] text-[#454545] border border-gray-300">Não Iniciado</span>';
+              badgeBg = 'bg-[#EDEDED] text-[#454545] border-2 border-gray-300';
+            }
+
+            const dataFormatada = act.data ? act.data.split('-').reverse().join('/') : '-';
+
+            html += `
+              <tr class="hover:bg-gray-50 transition">
+                <td class="p-2 text-center">
+                  <span class="badge-balao ${badgeBg}">${act.numeroBalao}</span>
+                </td>
+                <td class="p-2 font-bold text-[#454545]">${act.linha}</td>
+                <td class="p-2 font-bold text-gray-800">${act.equipamento}</td>
+                <td class="p-2 font-medium text-gray-800">${act.descricao}</td>
+                <td class="p-2 text-gray-600">${act.responsavel || '-'}</td>
+                <td class="p-2">${statusBadge}</td>
+                <td class="p-2 text-gray-600 font-mono text-[11px]">${dataFormatada}</td>
+                <td class="p-2 text-center no-print">
+                  <button onclick="abrirModalEditar('${act.id}')" class="text-blue-600 hover:text-blue-800 font-bold px-1.5 py-0.5 rounded hover:bg-blue-50 transition">
+                    Editar
+                  </button>
+                </td>
+              </tr>
+            `;
+          });
+        }
+
+        html += `
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+
+        card.innerHTML = html;
+        container.appendChild(card);
+      });
+    }
+
+    function gerarHtmlBaloesEquip(setor, quadroId, linhaNome, equip) {
+      const baloes = atividades.filter(a => 
+        a.setor === setor &&
+        a.quadro === quadroId && 
+        a.linha === linhaNome && 
+        a.equipamento === equip &&
+        (!filtroStatusAtivo || a.status === filtroStatusAtivo)
+      );
+
+      if (baloes.length === 0) {
+        return `<span class="text-[9px] text-gray-300 italic">Vazio</span>`;
+      }
+
+      return baloes.map(b => {
+        let badgeStyle = '';
+        if (b.status === 'CONCLUIDO') badgeStyle = 'bg-[#00B800] text-white border-2 border-[#009e00]';
+        else if (b.status === 'EM_ANDAMENTO') badgeStyle = 'bg-[#FEF1E0] text-[#A86800] border-2 border-[#F6D8B5]';
+        else if (b.status === 'BLOQUEADO') badgeStyle = 'bg-red-100 text-red-700 border-2 border-red-400';
+        else badgeStyle = 'bg-[#EDEDED] text-[#454545] border-2 border-gray-300';
+
+        return `
+          <button onclick="abrirModalEditar('${b.id}')" title="Balão #${b.numeroBalao} (${equip}): ${b.descricao}" class="badge-balao ${badgeStyle} hover:scale-110 cursor-pointer transition transform">
+            ${b.numeroBalao}
+          </button>
+        `;
+      }).join('');
+    }
+
+    // FILTRAGEM
+    function filtrarQuadro(quadroId) {
+      filtroQuadroAtivo = quadroId;
+      atualizarBarraFiltros();
+      renderizarEstrutura();
+    }
+
+    function filtrarFornecimento(tipo) {
+      filtroFornecimentoMontagem = tipo;
+      filtroQuadroAtivo = "TODOS";
+      atualizarBarraFiltros();
+      renderizarEstrutura();
+    }
+
+    function filtrarStatus(status) {
+      filtroStatusAtivo = filtroStatusAtivo === status ? null : status;
+      renderizarEstrutura();
+    }
+
+    // CONTROLES DO MODAL DE CADASTRO / EDIÇÃO
+    function aoMudarSetorModal() {
+      const setor = document.getElementById("editSetor").value;
+      const quadroSelect = document.getElementById("editQuadro");
+      const equipSelect = document.getElementById("editEquipamento");
+      const labelEquip = document.getElementById("labelEditEquipamento");
+      const labelLinha = document.getElementById("labelEditLinha");
+
+      quadroSelect.innerHTML = "";
+      equipSelect.innerHTML = "";
+
+      if (setor === "EMPASTAMENTO") {
+        labelLinha.textContent = "Linha de Produção";
+        labelEquip.textContent = "Máquina do Empastamento";
+        ESTRUTURA_EMPASTAMENTO.forEach(q => {
+          const opt = document.createElement("option");
+          opt.value = q.id;
+          opt.textContent = q.titulo;
+          quadroSelect.appendChild(opt);
+        });
+        MAQUINAS_EMPASTAMENTO.forEach(m => {
+          const opt = document.createElement("option");
+          opt.value = m;
+          opt.textContent = m;
+          equipSelect.appendChild(opt);
+        });
+      } else if (setor === "MONTAGEM") {
+        labelLinha.textContent = "Linha de Produção";
+        labelEquip.textContent = "Estação da Montagem";
+        ESTRUTURA_MONTAGEM.forEach(q => {
+          const opt = document.createElement("option");
+          opt.value = q.id;
+          opt.textContent = `${q.titulo} (${q.linhaNome}) - ${q.fornecimentoTDI ? 'FORNECIMENTO TDI' : 'EXISTENTE'}`;
+          quadroSelect.appendChild(opt);
+        });
+        ESTACOES_MONTAGEM.forEach(est => {
+          const opt = document.createElement("option");
+          opt.value = est;
+          opt.textContent = est;
+          equipSelect.appendChild(opt);
+        });
+      } else if (setor === "ACABAMENTO") {
+        labelLinha.textContent = "Linha de Produção";
+        labelEquip.textContent = "Máquina do Acabamento";
+        ESTRUTURA_ACABAMENTO.forEach(q => {
+          const opt = document.createElement("option");
+          opt.value = q.id;
+          opt.textContent = `${q.titulo} (${q.linhaNome})`;
+          quadroSelect.appendChild(opt);
+        });
+        MAQUINAS_ACABAMENTO.forEach(m => {
+          const opt = document.createElement("option");
+          opt.value = m;
+          opt.textContent = m;
+          equipSelect.appendChild(opt);
+        });
+      } else {
+        // ROCHES
+        labelLinha.textContent = "Roche (Linha)";
+        labelEquip.textContent = "Equipamento da Roche";
+        ESTRUTURA_ROCHES.forEach(q => {
+          const opt = document.createElement("option");
+          opt.value = q.id;
+          opt.textContent = q.titulo;
+          quadroSelect.appendChild(opt);
+        });
+        MAQUINAS_ROCHES.forEach(m => {
+          const opt = document.createElement("option");
+          opt.value = m;
+          opt.textContent = m;
+          equipSelect.appendChild(opt);
+        });
+      }
+
+      aoMudarQuadroModal();
+    }
+
+    function aoMudarQuadroModal() {
+      const setor = document.getElementById("editSetor").value;
+      const quadroId = document.getElementById("editQuadro").value;
+      const linhaSelect = document.getElementById("editLinha");
+      linhaSelect.innerHTML = "";
+
+      let lista = ESTRUTURA_EMPASTAMENTO;
+      if (setor === "MONTAGEM") lista = ESTRUTURA_MONTAGEM;
+      if (setor === "ACABAMENTO") lista = ESTRUTURA_ACABAMENTO;
+      if (setor === "ROCHES") lista = ESTRUTURA_ROCHES;
+
+      const quadro = lista.find(q => q.id === quadroId);
+
+      if (quadro) {
+        quadro.linhas.forEach(l => {
+          const opt = document.createElement("option");
+          opt.value = l.nome;
+          opt.textContent = l.nome;
+          linhaSelect.appendChild(opt);
+        });
+      }
+    }
+
+    function abrirModalNovaAtividade() {
+      document.getElementById("formAtividade").reset();
+      document.getElementById("editId").value = "";
+      document.getElementById("editSetor").value = setorAtivo;
+      document.getElementById("modalTitulo").textContent = "Cadastrar Novo Balão / Atividade";
+      document.getElementById("btnExcluirAtividade").classList.add("hidden");
+      aoMudarSetorModal();
+      document.getElementById("modalAtividade").classList.remove("hidden");
+    }
+
+    function adicionarAtividadeParaLinha(setor, quadroId, linhaNome) {
+      abrirModalNovaAtividade();
+      document.getElementById("editSetor").value = setor;
+      aoMudarSetorModal();
+      document.getElementById("editQuadro").value = quadroId;
+      aoMudarQuadroModal();
+      document.getElementById("editLinha").value = linhaNome;
+    }
+
+    function adicionarAtividadeRapida(setor, quadroId, linhaNome, equip) {
+      abrirModalNovaAtividade();
+      document.getElementById("editSetor").value = setor;
+      aoMudarSetorModal();
+      document.getElementById("editQuadro").value = quadroId;
+      aoMudarQuadroModal();
+      document.getElementById("editLinha").value = linhaNome;
+      document.getElementById("editEquipamento").value = equip;
+      
+      const maxBalao = atividades
+        .filter(a => a.setor === setor)
+        .reduce((max, a) => {
+          const n = parseInt(a.numeroBalao, 10);
+          return !isNaN(n) && n > max ? n : max;
+        }, 0);
+      document.getElementById("editNumeroBalao").value = String(maxBalao + 1).padStart(2, '0');
+    }
+
+    function abrirModalEditar(id) {
+      const act = atividades.find(a => a.id === id);
+      if (!act) return;
+
+      document.getElementById("editId").value = act.id;
+      document.getElementById("editSetor").value = act.setor || "EMPASTAMENTO";
+      aoMudarSetorModal();
+      document.getElementById("editQuadro").value = act.quadro;
+      aoMudarQuadroModal();
+      document.getElementById("editLinha").value = act.linha;
+      document.getElementById("editEquipamento").value = act.equipamento;
+      document.getElementById("editNumeroBalao").value = act.numeroBalao;
+      document.getElementById("editDescricao").value = act.descricao;
+      document.getElementById("editResponsavel").value = act.responsavel || "";
+      document.getElementById("editStatus").value = act.status || "NAO_INICIADO";
+      document.getElementById("editData").value = act.data || "";
+
+      document.getElementById("modalTitulo").textContent = `Editar Balão #${act.numeroBalao} - ${act.equipamento} (${act.setor})`;
+      document.getElementById("btnExcluirAtividade").classList.remove("hidden");
+      document.getElementById("modalAtividade").classList.remove("hidden");
+    }
+
+    function fecharModal() {
+      document.getElementById("modalAtividade").classList.add("hidden");
+    }
+
+    function salvarAtividade(event) {
+      event.preventDefault();
+      const id = document.getElementById("editId").value;
+      const setor = document.getElementById("editSetor").value;
+      const quadro = document.getElementById("editQuadro").value;
+      const linha = document.getElementById("editLinha").value;
+      const equipamento = document.getElementById("editEquipamento").value;
+      const numeroBalao = document.getElementById("editNumeroBalao").value;
+      const descricao = document.getElementById("editDescricao").value;
+      const responsavel = document.getElementById("editResponsavel").value;
+      const status = document.getElementById("editStatus").value;
+      const data = document.getElementById("editData").value;
+
+      if (id) {
+        const idx = atividades.findIndex(a => a.id === id);
+        if (idx !== -1) {
+          atividades[idx] = { id, setor, quadro, linha, equipamento, numeroBalao, descricao, responsavel, status, data };
+        }
+      } else {
+        const novoId = "act-" + Date.now();
+        atividades.push({ id: novoId, setor, quadro, linha, equipamento, numeroBalao, descricao, responsavel, status, data });
+      }
+
+      salvarNoLocalStorage();
+      renderizarEstrutura();
+      fecharModal();
+    }
+
+    function excluirAtividadeAtual() {
+      const id = document.getElementById("editId").value;
+      if (!id) return;
+      if (confirm("Deseja realmente remover este balão e sua atividade?")) {
+        atividades = atividades.filter(a => a.id !== id);
+        salvarNoLocalStorage();
+        renderizarEstrutura();
+        fecharModal();
+      }
+    }
+
+    // =============================================================
+    // EXPORTAÇÃO ENXUTA (SOMENTE DADOS DA ATIVIDADE E LOCALIZAÇÃO)
+    // =============================================================
+
+    function formatarStatusTexto(status) {
+      switch (status) {
+        case 'CONCLUIDO': return 'Concluído';
+        case 'EM_ANDAMENTO': return 'Em Andamento';
+        case 'BLOQUEADO': return 'Bloqueado';
+        case 'NAO_INICIADO': return 'Não Iniciado';
+        default: return status || 'Não Iniciado';
+      }
+    }
+
+    function obterNomeArea(setor) {
+      switch (setor) {
+        case 'EMPASTAMENTO': return 'Empastamento';
+        case 'MONTAGEM': return 'Montagem';
+        case 'ACABAMENTO': return 'Acabamento';
+        case 'ROCHES': return 'Roches (Grades Expandidas)';
+        default: return setor || 'Geral';
+      }
+    }
+
+    function obterTituloQuadro(setor, quadroId) {
+      let lista = [];
+      if (setor === 'EMPASTAMENTO') lista = ESTRUTURA_EMPASTAMENTO;
+      else if (setor === 'MONTAGEM') lista = ESTRUTURA_MONTAGEM;
+      else if (setor === 'ACABAMENTO') lista = ESTRUTURA_ACABAMENTO;
+      else if (setor === 'ROCHES') lista = ESTRUTURA_ROCHES;
+      
+      const q = lista.find(item => item.id === quadroId);
+      return q ? q.titulo : quadroId;
+    }
+
+    // Retorna APENAS os dados da atividade solicitados pelo usuário:
+    // atividade, maquina, linha, quadro, area, responsavel, data e status
+    function obterDadosLimposParaExportar() {
+      return atividades.map(act => {
+        const dataFormatada = act.data ? act.data.split('-').reverse().join('/') : '';
+        return {
+          balao: act.numeroBalao || '',
+          area: obterNomeArea(act.setor),
+          quadro: obterTituloQuadro(act.setor, act.quadro),
+          linha: act.linha || '',
+          maquina: act.equipamento || '',
+          atividade: act.descricao || '',
+          responsavel: act.responsavel || '',
+          data: dataFormatada,
+          status: formatarStatusTexto(act.status)
+        };
+      });
+    }
+
+    // 1. Exportação em JSON enxuto
+    function exportarJSON() {
+      const dadosEnxutos = obterDadosLimposParaExportar();
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dadosEnxutos, null, 2));
+      const downloadAnchor = document.createElement("a");
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `moura_atividades_${new Date().toISOString().slice(0,10)}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    // 2. Exportação em formato CSV (Compatível direto com Microsoft Excel)
+    function exportarCSV() {
+      const dados = obterDadosLimposParaExportar();
+      const colunas = [
+        "Balão",
+        "Área",
+        "Quadro",
+        "Linha / Roche",
+        "Máquina / Estação",
+        "Atividade",
+        "Responsável",
+        "Data Prevista",
+        "Status"
+      ];
+
+      const linhasCSV = [
+        colunas.join(";")
+      ];
+
+      const escaparCSV = (val) => `"${String(val || '').replace(/"/g, '""')}"`;
+
+      dados.forEach(d => {
+        const linha = [
+          escaparCSV(d.balao),
+          escaparCSV(d.area),
+          escaparCSV(d.quadro),
+          escaparCSV(d.linha),
+          escaparCSV(d.maquina),
+          escaparCSV(d.atividade),
+          escaparCSV(d.responsavel),
+          escaparCSV(d.data),
+          escaparCSV(d.status)
+        ];
+        linhasCSV.push(linha.join(";"));
+      });
+
+      // UTF-8 BOM (\uFEFF) para garantir abertura com acentuação correta no Excel brasileiro
+      const conteudoCSV = "\uFEFF" + linhasCSV.join("\r\n");
+      const blob = new Blob([conteudoCSV], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const downloadAnchor = document.createElement("a");
+      downloadAnchor.setAttribute("href", url);
+      downloadAnchor.setAttribute("download", `moura_atividades_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    // Importação flexível (suporta tanto o JSON enxuto quanto o interno completo)
+    function importarJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (Array.isArray(imported)) {
+            atividades = imported.map((item, idx) => {
+              if (item.atividade !== undefined || item.area !== undefined) {
+                // Formato enxuto exportado
+                let setor = "EMPASTAMENTO";
+                const areaStr = (item.area || "").toUpperCase();
+                if (areaStr.includes("MONT")) setor = "MONTAGEM";
+                else if (areaStr.includes("ACAB")) setor = "ACABAMENTO";
+                else if (areaStr.includes("ROCH")) setor = "ROCHES";
+
+                let quadroId = "";
+                let lista = [];
+                if (setor === "EMPASTAMENTO") lista = ESTRUTURA_EMPASTAMENTO;
+                else if (setor === "MONTAGEM") lista = ESTRUTURA_MONTAGEM;
+                else if (setor === "ACABAMENTO") lista = ESTRUTURA_ACABAMENTO;
+                else lista = ESTRUTURA_ROCHES;
+
+                const qFound = lista.find(q => q.titulo === item.quadro || q.id === item.quadro);
+                quadroId = qFound ? qFound.id : (lista[0] ? lista[0].id : "Q01");
+
+                let dataIso = "";
+                if (item.data) {
+                  if (item.data.includes("/")) {
+                    const p = item.data.split("/");
+                    if (p.length === 3) dataIso = `${p[2]}-${p[1]}-${p[0]}`;
+                  } else {
+                    dataIso = item.data;
+                  }
+                }
+
+                let st = "NAO_INICIADO";
+                const stStr = (item.status || "").toUpperCase();
+                if (stStr.includes("CONCLU")) st = "CONCLUIDO";
+                else if (stStr.includes("ANDAM")) st = "EM_ANDAMENTO";
+                else if (stStr.includes("BLOQ")) st = "BLOQUEADO";
+
+                return {
+                  id: item.id || `act-imp-${Date.now()}-${idx}`,
+                  setor: setor,
+                  quadro: quadroId,
+                  linha: item.linha || "",
+                  equipamento: item.maquina || item.equipamento || "",
+                  numeroBalao: item.balao || item.numeroBalao || String(idx + 1).padStart(2, '0'),
+                  descricao: item.atividade || item.descricao || "",
+                  responsavel: item.responsavel || "",
+                  status: st,
+                  data: dataIso
+                };
+              } else {
+                return item;
+              }
+            });
+
+            salvarNoLocalStorage();
+            renderizarEstrutura();
+            alert("Atividades importadas com sucesso!");
+          } else {
+            alert("Formato de arquivo JSON inválido.");
+          }
+        } catch(err) {
+          alert("Erro ao ler o arquivo JSON: " + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // =============================================================
+    // CONTROLES DE PRÉVIA, EXPORTAÇÃO E IMPRESSÃO EM PDF (LAYOUT TDI)
+    // =============================================================
+
+    function abrirModalRelatorioPDF() {
+      document.getElementById("relatorioFiltroArea").value = "TODOS";
+      atualizarTabelaRelatorioPDF();
+      document.getElementById("modalRelatorioPDF").classList.remove("hidden");
+    }
+
+    function fecharModalRelatorioPDF() {
+      document.getElementById("modalRelatorioPDF").classList.add("hidden");
+    }
+
+    function atualizarTabelaRelatorioPDF() {
+      const filtro = document.getElementById("relatorioFiltroArea").value;
+      const dataHora = new Date().toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" });
+      document.getElementById("relatorioDataHoraEmissao").textContent = dataHora;
+
+      let lista = atividades;
+      if (filtro !== "TODOS") {
+        lista = lista.filter(a => a.setor === filtro);
+      }
+
+      // Atualizar contadores KPIs
+      const total = lista.length;
+      const concluidas = lista.filter(a => a.status === 'CONCLUIDO').length;
+      const andamento = lista.filter(a => a.status === 'EM_ANDAMENTO').length;
+      const bloqueadas = lista.filter(a => a.status === 'BLOQUEADO').length;
+      const naoIniciadas = lista.filter(a => !a.status || a.status === 'NAO_INICIADO').length;
+
+      document.getElementById("kpiTotal").textContent = total;
+      document.getElementById("kpiConcluidas").textContent = concluidas;
+      document.getElementById("kpiAndamento").textContent = andamento;
+      document.getElementById("kpiBloqueadas").textContent = bloqueadas;
+      document.getElementById("kpiNaoIniciadas").textContent = naoIniciadas;
+
+      // Renderizar Linhas da Tabela
+      const tbody = document.getElementById("relatorioTbody");
+      if (lista.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-gray-400 italic font-medium">Nenhuma atividade cadastrada para este filtro de área.</td></tr>`;
+        return;
+      }
+
+      // Ordenação hierárquica por Setor -> Quadro -> Linha -> Balão
+      const listaOrdenada = [...lista].sort((a, b) => {
+        if (a.setor !== b.setor) return a.setor.localeCompare(b.setor);
+        if (a.quadro !== b.quadro) return a.quadro.localeCompare(b.quadro);
+        return (parseInt(a.numeroBalao, 10) || 0) - (parseInt(b.numeroBalao, 10) || 0);
+      });
+
+      tbody.innerHTML = listaOrdenada.map(act => {
+        let badgeBg = '';
+        let statusBadge = '';
+        if (act.status === 'CONCLUIDO') {
+          statusBadge = '<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-[#00B800]/15 text-[#008f00] border border-[#00B800]/40">Concluído</span>';
+          badgeBg = 'bg-[#00B800] text-white border-2 border-[#009e00]';
+        } else if (act.status === 'EM_ANDAMENTO') {
+          statusBadge = '<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-[#FEF1E0] text-[#A86800] border border-[#F6D8B5]">Em Andamento</span>';
+          badgeBg = 'bg-[#FEF1E0] text-[#A86800] border-2 border-[#F6D8B5]';
+        } else if (act.status === 'BLOQUEADO') {
+          statusBadge = '<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-red-50 text-red-700 border border-red-200">Bloqueado</span>';
+          badgeBg = 'bg-red-100 text-red-700 border-2 border-red-400';
+        } else {
+          statusBadge = '<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-[#EDEDED] text-[#454545] border border-gray-300">Não Iniciado</span>';
+          badgeBg = 'bg-[#EDEDED] text-[#454545] border-2 border-gray-300';
+        }
+
+        const dataFormatada = act.data ? act.data.split('-').reverse().join('/') : '-';
+        const quadroTitulo = obterTituloQuadro(act.setor, act.quadro);
+        const areaNome = obterNomeArea(act.setor);
+
+        return `
+          <tr class="hover:bg-gray-50 transition border-b border-gray-100">
+            <td class="p-2 text-center">
+              <span class="badge-balao ${badgeBg}">${act.numeroBalao}</span>
+            </td>
+            <td class="p-2 font-bold text-gray-700">${areaNome}</td>
+            <td class="p-2 font-bold text-[#454545]">${quadroTitulo}</td>
+            <td class="p-2 font-medium text-gray-800">${act.linha}</td>
+            <td class="p-2 font-bold text-gray-800">${act.equipamento}</td>
+            <td class="p-2 font-medium text-gray-800">${act.descricao}</td>
+            <td class="p-2 text-gray-600">${act.responsavel || '-'}</td>
+            <td class="p-2 text-center text-gray-600 font-mono text-[11px]">${dataFormatada}</td>
+            <td class="p-2 text-center">${statusBadge}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function imprimirRelatorioPDF() {
+      const modal = document.getElementById("modalRelatorioPDF");
+      if (modal.classList.contains("hidden")) {
+        abrirModalRelatorioPDF();
+      }
+      setTimeout(() => {
+        window.print();
+      }, 150);
+    }
+
+    function gerarEBaixarHTMLRelatorio() {
+      const relatorioElemento = document.getElementById("relatorioConteudoPrint");
+      const htmlCompleto = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório Executivo de Atividades - MOURA-015-2026-ELE-DE-002 - TDI Automação</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"><\/script>
+  <style>
+    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #ffffff; padding: 24px; color: #333; }
+    .badge-balao { display: inline-flex; align-items: center; justify-content: center; width: 25px; height: 25px; border-radius: 9999px; font-weight: 800; font-size: 10px; }
+    @page { size: A4 landscape; margin: 8mm 6mm; }
+    @media print {
+      body { padding: 0 !important; }
+      thead { display: table-header-group !important; }
+      tr { page-break-inside: avoid !important; }
+    }
+  </style>
+</head>
+<body class="max-w-6xl mx-auto">
+  ${relatorioElemento.outerHTML}
+</body>
+</html>`;
+
+      const blob = new Blob([htmlCompleto], { type: "text/html;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const downloadAnchor = document.createElement("a");
+      downloadAnchor.setAttribute("href", url);
+      downloadAnchor.setAttribute("download", `moura_relatorio_tdi_${new Date().toISOString().slice(0,10)}.html`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    window.addEventListener("DOMContentLoaded", init);
+  </script>
+</body>
+</html>
